@@ -2,7 +2,7 @@ name: Process and Store IMDB Ratings File
 
 on:
   schedule:
-    - cron: '5 13 29 * *'
+    - cron: '5 11 29 * *'
   workflow_dispatch:  # Allows manual triggering
 
 permissions:
