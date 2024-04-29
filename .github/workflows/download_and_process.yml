@@ -30,8 +30,7 @@ jobs:
 
     - name: Convert .tsv to .csv
       run: |
-        awk 'BEGIN {FS="\t"; OFS=","; print "Column1,Column2,Column3"} {gsub(/,/, "", $1); gsub(/,/, "", $2); gsub(/,/, "", $3); print "\"" $1 "\",\"" $2 "\",\"" $3 "\""}' ratings.txt > ratings.csv
-
+        awk 'BEGIN {FS="\t"; OFS=","} NR == 1 {print} NR > 1 {gsub(/,/, "", $1); gsub(/,/, "", $2); gsub(/,/, "", $3); print "\"" $1 "\",\"" $2 "\",\"" $3 "\""}' ratings.txt > ratings.csv
 
     - name: Commit and push changes
       run: |
