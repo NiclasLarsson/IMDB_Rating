@@ -1,4 +1,4 @@
-name: Download, Unzip, and Rename File
+name: Process and Store IMDB Ratings File
 
 on:
   schedule:
@@ -24,3 +24,11 @@ jobs:
     - name: Rename the file
       run: |
         mv ratings.tsv ratings.txt
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "action@github.com"
+        git config --global user.name "GitHub Action"
+        git add ratings.txt
+        git commit -m "Update IMDB ratings"
+        git push
