@@ -2,25 +2,25 @@ name: Download, Unzip, and Rename File
 
 on:
   schedule:
-    - cron: '0 0 * * 0'
-  workflow_dispatch:
-
+    - cron: '0 0 * * 0'  # Runs at 00:00 every Sunday
+  workflow_dispatch:  # Allows manual triggering
 
 jobs:
-  process_file:
+  download_process_commit:
     runs-on: ubuntu-latest
+    
     steps:
-    - name: Checkout
+    - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Download file
+    - name: Download IMDB Ratings File
       run: |
         curl -L -o ratings.tsv.gz https://datasets.imdbws.com/title.ratings.tsv.gz
 
-    - name: Unzip file
+    - name: Unzip the file
       run: |
         gunzip ratings.tsv.gz
 
-    - name: Rename file
+    - name: Rename the file
       run: |
         mv ratings.tsv ratings.txt
