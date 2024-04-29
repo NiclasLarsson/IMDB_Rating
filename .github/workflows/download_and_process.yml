@@ -2,7 +2,9 @@ name: Download, Unzip, and Rename File
 
 on:
   schedule:
-    - cron: '0 0 * * 0'  # This sets the job to run at 00:00 every Sunday
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
 
 jobs:
   process_file:
