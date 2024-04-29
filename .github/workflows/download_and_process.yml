@@ -2,7 +2,7 @@ name: Process and Store IMDB Ratings File
 
 on:
   schedule:
-    - cron: '15 11 29 * *'
+    - cron: '0 0 * * 0'  # Runs at 00:00 UTC every Sunday
   workflow_dispatch:  # Allows manual triggering
 
 permissions:
@@ -24,14 +24,18 @@ jobs:
       run: |
         gunzip ratings.tsv.gz
 
-    - name: Rename the file
+    - name: Rename the file to .txt
       run: |
         mv ratings.tsv ratings.txt
+
+    - name: Convert .tsv to .csv
+      run: |
+        awk 'BEGIN {FS="\t"; OFS=","} {print $1,$2,$3}' ratings.txt > ratings.csv
 
     - name: Commit and push changes
       run: |
         git config --global user.email "action@github.com"
         git config --global user.name "GitHub Action"
-        git add ratings.txt
-        git commit -m "Update IMDB ratings" || echo "No changes to commit"
+        git add ratings.csv
+        git commit -m "Update and convert IMDB ratings to CSV format"
         git push
